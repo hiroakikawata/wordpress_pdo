@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./html:/var/www/html
+    ports:
+      - 9000:80
+    container_name: php7.2
+    
