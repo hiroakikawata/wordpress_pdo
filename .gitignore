@@ -1,4 +1,12 @@
-html/wp-admin
+html/wp-admin/css
+html/wp-admin/images
+html/wp-admin/includes/*
+!schema.php
+html/wp-admin/js
+html/wp-admin/maint
+html/wp-admin/network
+html/wp-admin/user
+html/wp-admin/*.php
 html/wp-content
 html/wp-includes/*
 !wp-db.php
