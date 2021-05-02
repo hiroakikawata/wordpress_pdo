@@ -63,20 +63,7 @@ function mysql_real_escape_string($string, $pdo) {
 }
 
 function mysql_query($query, $pdo) {
-	// if (strpos($query, "wp_users") !== false ) {
-	// 	print($query);
-	// }
 	return $pdo->query($query, PDO::FETCH_OBJ);
-	/*
-	if (strpos($query, "SELECT ") !== false) {
-		return $pdo->query($query, PDO::FETCH_OBJ);
-		// return $pdo->exec($sql);
-	} else {
-		print($query);
-		// return $pdo->query($query, PDO::FETCH_OBJ);
-		return $pdo->exec($sql);
-	}
-	*/
 }
 
 function mysql_select_db($db, $pdo) {
@@ -102,6 +89,7 @@ function mysql_insert_id($pdo) {
 }
 
 function mysql_affected_rows($pdo) {
+	// TODO: FIX
 	// return $pdo->rowCount();
 	return 1;
 }
