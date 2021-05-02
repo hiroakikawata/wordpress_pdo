@@ -10,10 +10,15 @@ Current wordpress is using mysqli/mysql library to connect MySQL. This is hard t
 Write following functions using PDO,
 - mysql_connect
 - mysql_get_client_info
-- mysql_reql_escape_string
+- mysql_real_escape_string
 - mysql_query
 - mysql_select_db
 - mysql_ping
 - mysql_error
 - mysql_insert_id
 - mysql_affected_rows
+
+# TODO
+
+- Fix Admin login problem. (Occuring some problems at current_user_can function in ```capabilities.php```)
+- Find a method instead of using ```SELECT FOUND_ROWS()```
