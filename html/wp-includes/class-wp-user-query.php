@@ -248,7 +248,7 @@ class WP_User_Query {
 		}
 
 		if ( isset( $qv['count_total'] ) && $qv['count_total'] ) {
-			$this->query_fields = /*'SQL_CALC_FOUND_ROWS ' .*/ $this->query_fields;
+			$this->query_fields = 'SQL_CALC_FOUND_ROWS ' . $this->query_fields;
 		}
 
 		$this->query_from  = "FROM $wpdb->users";

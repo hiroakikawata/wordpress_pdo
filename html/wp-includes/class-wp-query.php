@@ -3255,7 +3255,7 @@ class WP_Query {
 			 * @param string   $found_posts_query The query to run to find the found posts.
 			 * @param WP_Query $query             The WP_Query instance (passed by reference).
 			 */
-			$found_posts_query = apply_filters_ref_array( 'found_posts_query', array( 'SELECT FOUND_ROWS()', &$this ) );
+			$found_posts_query = apply_filters_ref_array( 'found_posts_query', array( 'SELECT', &$this ) );
 
 			$this->found_posts = (int) $wpdb->get_var( $found_posts_query );
 		} else {
