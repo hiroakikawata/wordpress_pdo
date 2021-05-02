@@ -1,21 +1,23 @@
-html/wp-admin/css
-html/wp-admin/images
-html/wp-admin/includes/*
-!schema.php
-html/wp-admin/js
-html/wp-admin/maint
-html/wp-admin/network
-html/wp-admin/user
-html/wp-admin/*.php
-html/wp-content
-html/wp-includes/*
-!wp-db.php
-!functions.php
-!upgrade.php
-!user.php
-!option.php
-!class-wp-comment-query.php
-!class-wp-network-query.php
-!class-wp-query.php
-!class-wp-site-query.php
-!class-wp-user-query.php
+# html/wp-admin/css
+# html/wp-admin/images
+# html/wp-admin/includes/*
+# !schema.php
+# html/wp-admin/js
+# html/wp-admin/maint
+# html/wp-admin/network
+# html/wp-admin/user
+# html/wp-admin/*.php
+# html/wp-content
+# html/wp-includes/*
+# !wp-db.php
+# !functions.php
+# !upgrade.php
+# !user.php
+# !option.php
+# !class-wp-comment-query.php
+# !class-wp-network-query.php
+# !class-wp-query.php
+# !class-wp-site-query.php
+# !class-wp-user-query.php
+# !capabilities.php
+*.bin
