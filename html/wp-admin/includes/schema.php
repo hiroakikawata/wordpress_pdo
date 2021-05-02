@@ -54,53 +54,39 @@ function wp_get_db_schema( $scope = 'all', $blog_id = null ) {
 
 	// Blog-specific tables.
 	$blog_tables = "CREATE TABLE $wpdb->termmeta (
-	meta_id bigint(20) unsigned NOT NULL auto_increment,
-	term_id bigint(20) unsigned NOT NULL default '0',
+	meta_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	term_id INTEGER NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (meta_id),
-	KEY term_id (term_id),
-	KEY meta_key (meta_key($max_index_length))
+	meta_value text
 ) $charset_collate;
 CREATE TABLE $wpdb->terms (
- term_id bigint(20) unsigned NOT NULL auto_increment,
+ term_id INTEGER PRIMARY KEY AUTOINCREMENT,
  name varchar(200) NOT NULL default '',
  slug varchar(200) NOT NULL default '',
- term_group bigint(10) NOT NULL default 0,
- PRIMARY KEY  (term_id),
- KEY slug (slug($max_index_length)),
- KEY name (name($max_index_length))
+ term_group bigint(10) NOT NULL default 0
 ) $charset_collate;
 CREATE TABLE $wpdb->term_taxonomy (
- term_taxonomy_id bigint(20) unsigned NOT NULL auto_increment,
- term_id bigint(20) unsigned NOT NULL default 0,
+ term_taxonomy_id INTEGER PRIMARY KEY AUTOINCREMENT,
+ term_id bigint(20) NOT NULL default 0,
  taxonomy varchar(32) NOT NULL default '',
- description longtext NOT NULL,
- parent bigint(20) unsigned NOT NULL default 0,
- count bigint(20) NOT NULL default 0,
- PRIMARY KEY  (term_taxonomy_id),
- UNIQUE KEY term_id_taxonomy (term_id,taxonomy),
- KEY taxonomy (taxonomy)
+ description text NOT NULL,
+ parent bigint(20) NOT NULL default 0,
+ count bigint(20) NOT NULL default 0
 ) $charset_collate;
 CREATE TABLE $wpdb->term_relationships (
- object_id bigint(20) unsigned NOT NULL default 0,
- term_taxonomy_id bigint(20) unsigned NOT NULL default 0,
- term_order int(11) NOT NULL default 0,
- PRIMARY KEY  (object_id,term_taxonomy_id),
- KEY term_taxonomy_id (term_taxonomy_id)
+ object_id bigint(20) NOT NULL default 0,
+ term_taxonomy_id bigint(20) NOT NULL default 0,
+ term_order int(11) NOT NULL default 0
 ) $charset_collate;
 CREATE TABLE $wpdb->commentmeta (
-	meta_id bigint(20) unsigned NOT NULL auto_increment,
-	comment_id bigint(20) unsigned NOT NULL default '0',
+	meta_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+	comment_id bigint(20) NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (meta_id),
-	KEY comment_id (comment_id),
-	KEY meta_key (meta_key($max_index_length))
+	meta_value longtext
 ) $charset_collate;
 CREATE TABLE $wpdb->comments (
-	comment_ID bigint(20) unsigned NOT NULL auto_increment,
-	comment_post_ID bigint(20) unsigned NOT NULL default '0',
+	comment_ID  INTEGER PRIMARY KEY AUTOINCREMENT,
+	comment_post_ID bigint(20) NOT NULL default '0',
 	comment_author tinytext NOT NULL,
 	comment_author_email varchar(100) NOT NULL default '',
 	comment_author_url varchar(200) NOT NULL default '',
@@ -112,53 +98,39 @@ CREATE TABLE $wpdb->comments (
 	comment_approved varchar(20) NOT NULL default '1',
 	comment_agent varchar(255) NOT NULL default '',
 	comment_type varchar(20) NOT NULL default 'comment',
-	comment_parent bigint(20) unsigned NOT NULL default '0',
-	user_id bigint(20) unsigned NOT NULL default '0',
-	PRIMARY KEY  (comment_ID),
-	KEY comment_post_ID (comment_post_ID),
-	KEY comment_approved_date_gmt (comment_approved,comment_date_gmt),
-	KEY comment_date_gmt (comment_date_gmt),
-	KEY comment_parent (comment_parent),
-	KEY comment_author_email (comment_author_email(10))
+	comment_parent bigint(20) NOT NULL default '0',
+	user_id bigint(20) NOT NULL default '0'
 ) $charset_collate;
 CREATE TABLE $wpdb->links (
-	link_id bigint(20) unsigned NOT NULL auto_increment,
+	link_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	link_url varchar(255) NOT NULL default '',
 	link_name varchar(255) NOT NULL default '',
 	link_image varchar(255) NOT NULL default '',
 	link_target varchar(25) NOT NULL default '',
 	link_description varchar(255) NOT NULL default '',
 	link_visible varchar(20) NOT NULL default 'Y',
-	link_owner bigint(20) unsigned NOT NULL default '1',
+	link_owner bigint(20) NOT NULL default '1',
 	link_rating int(11) NOT NULL default '0',
 	link_updated datetime NOT NULL default '0000-00-00 00:00:00',
 	link_rel varchar(255) NOT NULL default '',
 	link_notes mediumtext NOT NULL,
-	link_rss varchar(255) NOT NULL default '',
-	PRIMARY KEY  (link_id),
-	KEY link_visible (link_visible)
+	link_rss varchar(255) NOT NULL default ''
 ) $charset_collate;
 CREATE TABLE $wpdb->options (
-	option_id bigint(20) unsigned NOT NULL auto_increment,
+	option_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	option_name varchar(191) NOT NULL default '',
 	option_value longtext NOT NULL,
-	autoload varchar(20) NOT NULL default 'yes',
-	PRIMARY KEY  (option_id),
-	UNIQUE KEY option_name (option_name),
-	KEY autoload (autoload)
+	autoload varchar(20) NOT NULL default 'yes'
 ) $charset_collate;
 CREATE TABLE $wpdb->postmeta (
-	meta_id bigint(20) unsigned NOT NULL auto_increment,
-	post_id bigint(20) unsigned NOT NULL default '0',
+	meta_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+	post_id bigint(20) NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (meta_id),
-	KEY post_id (post_id),
-	KEY meta_key (meta_key($max_index_length))
+	meta_value longtext
 ) $charset_collate;
 CREATE TABLE $wpdb->posts (
-	ID bigint(20) unsigned NOT NULL auto_increment,
-	post_author bigint(20) unsigned NOT NULL default '0',
+	ID  INTEGER PRIMARY KEY AUTOINCREMENT,
+	post_author bigint(20) NOT NULL default '0',
 	post_date datetime NOT NULL default '0000-00-00 00:00:00',
 	post_date_gmt datetime NOT NULL default '0000-00-00 00:00:00',
 	post_content longtext NOT NULL,
@@ -173,23 +145,18 @@ CREATE TABLE $wpdb->posts (
 	pinged text NOT NULL,
 	post_modified datetime NOT NULL default '0000-00-00 00:00:00',
 	post_modified_gmt datetime NOT NULL default '0000-00-00 00:00:00',
-	post_content_filtered longtext NOT NULL,
-	post_parent bigint(20) unsigned NOT NULL default '0',
+	post_content_filtered text NOT NULL,
+	post_parent bigint(20) NOT NULL default '0',
 	guid varchar(255) NOT NULL default '',
 	menu_order int(11) NOT NULL default '0',
 	post_type varchar(20) NOT NULL default 'post',
 	post_mime_type varchar(100) NOT NULL default '',
-	comment_count bigint(20) NOT NULL default '0',
-	PRIMARY KEY  (ID),
-	KEY post_name (post_name($max_index_length)),
-	KEY type_status_date (post_type,post_status,post_date,ID),
-	KEY post_parent (post_parent),
-	KEY post_author (post_author)
+	comment_count bigint(20) NOT NULL default '0'
 ) $charset_collate;\n";
 
 	// Single site users table. The multisite flavor of the users table is handled below.
 	$users_single_table = "CREATE TABLE $wpdb->users (
-	ID bigint(20) unsigned NOT NULL auto_increment,
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_login varchar(60) NOT NULL default '',
 	user_pass varchar(255) NOT NULL default '',
 	user_nicename varchar(50) NOT NULL default '',
@@ -198,16 +165,12 @@ CREATE TABLE $wpdb->posts (
 	user_registered datetime NOT NULL default '0000-00-00 00:00:00',
 	user_activation_key varchar(255) NOT NULL default '',
 	user_status int(11) NOT NULL default '0',
-	display_name varchar(250) NOT NULL default '',
-	PRIMARY KEY  (ID),
-	KEY user_login_key (user_login),
-	KEY user_nicename (user_nicename),
-	KEY user_email (user_email)
-) $charset_collate;\n";
+	display_name varchar(250) NOT NULL default ''
+)$charset_collate;\n";
 
 	// Multisite users table.
 	$users_multi_table = "CREATE TABLE $wpdb->users (
-	ID bigint(20) unsigned NOT NULL auto_increment,
+	ID  INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_login varchar(60) NOT NULL default '',
 	user_pass varchar(255) NOT NULL default '',
 	user_nicename varchar(50) NOT NULL default '',
@@ -218,22 +181,15 @@ CREATE TABLE $wpdb->posts (
 	user_status int(11) NOT NULL default '0',
 	display_name varchar(250) NOT NULL default '',
 	spam tinyint(2) NOT NULL default '0',
-	deleted tinyint(2) NOT NULL default '0',
-	PRIMARY KEY  (ID),
-	KEY user_login_key (user_login),
-	KEY user_nicename (user_nicename),
-	KEY user_email (user_email)
+	deleted tinyint(2) NOT NULL default '0'
 ) $charset_collate;\n";
 
 	// Usermeta.
 	$usermeta_table = "CREATE TABLE $wpdb->usermeta (
-	umeta_id bigint(20) unsigned NOT NULL auto_increment,
-	user_id bigint(20) unsigned NOT NULL default '0',
+	umeta_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+	user_id bigint(20) NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (umeta_id),
-	KEY user_id (user_id),
-	KEY meta_key (meta_key($max_index_length))
+	meta_value longtext
 ) $charset_collate;\n";
 
 	// Global tables.
@@ -245,7 +201,7 @@ CREATE TABLE $wpdb->posts (
 
 	// Multisite global tables.
 	$ms_global_tables = "CREATE TABLE $wpdb->blogs (
-	blog_id bigint(20) NOT NULL auto_increment,
+	blog_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	site_id bigint(20) NOT NULL default '0',
 	domain varchar(200) NOT NULL default '',
 	path varchar(100) NOT NULL default '',
@@ -256,47 +212,34 @@ CREATE TABLE $wpdb->posts (
 	mature tinyint(2) NOT NULL default '0',
 	spam tinyint(2) NOT NULL default '0',
 	deleted tinyint(2) NOT NULL default '0',
-	lang_id int(11) NOT NULL default '0',
-	PRIMARY KEY  (blog_id),
-	KEY domain (domain(50),path(5)),
-	KEY lang_id (lang_id)
+	lang_id int(11) NOT NULL default '0'
 ) $charset_collate;
 CREATE TABLE $wpdb->blogmeta (
-	meta_id bigint(20) unsigned NOT NULL auto_increment,
+	meta_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	blog_id bigint(20) NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (meta_id),
-	KEY meta_key (meta_key($max_index_length)),
-	KEY blog_id (blog_id)
+	meta_value text
 ) $charset_collate;
 CREATE TABLE $wpdb->registration_log (
-	ID bigint(20) NOT NULL auto_increment,
+	ID  INTEGER PRIMARY KEY AUTOINCREMENT,
 	email varchar(255) NOT NULL default '',
 	IP varchar(30) NOT NULL default '',
 	blog_id bigint(20) NOT NULL default '0',
-	date_registered datetime NOT NULL default '0000-00-00 00:00:00',
-	PRIMARY KEY  (ID),
-	KEY IP (IP)
+	date_registered datetime NOT NULL default '0000-00-00 00:00:00'
 ) $charset_collate;
 CREATE TABLE $wpdb->site (
-	id bigint(20) NOT NULL auto_increment,
+	id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	domain varchar(200) NOT NULL default '',
-	path varchar(100) NOT NULL default '',
-	PRIMARY KEY  (id),
-	KEY domain (domain(140),path(51))
+	path varchar(100) NOT NULL default ''
 ) $charset_collate;
 CREATE TABLE $wpdb->sitemeta (
-	meta_id bigint(20) NOT NULL auto_increment,
+	meta_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	site_id bigint(20) NOT NULL default '0',
 	meta_key varchar(255) default NULL,
-	meta_value longtext,
-	PRIMARY KEY  (meta_id),
-	KEY meta_key (meta_key($max_index_length)),
-	KEY site_id (site_id)
+	meta_value longtext
 ) $charset_collate;
 CREATE TABLE $wpdb->signups (
-	signup_id bigint(20) NOT NULL auto_increment,
+	signup_id  INTEGER PRIMARY KEY AUTOINCREMENT,
 	domain varchar(200) NOT NULL default '',
 	path varchar(100) NOT NULL default '',
 	title longtext NOT NULL,
@@ -307,11 +250,6 @@ CREATE TABLE $wpdb->signups (
 	active tinyint(1) NOT NULL default '0',
 	activation_key varchar(50) NOT NULL default '',
 	meta longtext,
-	PRIMARY KEY  (signup_id),
-	KEY activation_key (activation_key),
-	KEY user_email (user_email),
-	KEY user_login_email (user_login,user_email),
-	KEY domain_path (domain(140),path(51))
 ) $charset_collate;";
 
 	switch ( $scope ) {
@@ -567,10 +505,10 @@ function populate_options( array $options = array() ) {
 		'uninstall_plugins',
 		'auto_plugin_theme_update_emails',
 	);
-
+// var_dump("option");
 	$keys             = "'" . implode( "', '", array_keys( $options ) ) . "'";
 	$existing_options = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name in ( $keys )" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-
+// var_dump($existing_options );
 	$insert = '';
 
 	foreach ( $options as $option => $value ) {

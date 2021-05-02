@@ -10,3 +10,12 @@ html/wp-admin/*.php
 html/wp-content
 html/wp-includes/*
 !wp-db.php
+!functions.php
+!upgrade.php
+!user.php
+!option.php
+!class-wp-comment-query.php
+!class-wp-network-query.php
+!class-wp-query.php
+!class-wp-site-query.php
+!class-wp-user-query.php

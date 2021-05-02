@@ -2717,7 +2717,7 @@ function deslash( $content ) {
  */
 function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	global $wpdb;
-
+	
 	if ( in_array( $queries, array( '', 'all', 'blog', 'global', 'ms_global' ), true ) ) {
 		$queries = wp_get_db_schema( $queries );
 	}
@@ -2792,7 +2792,11 @@ function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore WordPress.N
 
 		// Fetch the table column structure from the database.
 		$suppress    = $wpdb->suppress_errors();
-		$tablefields = $wpdb->get_results( "DESCRIBE {$table};" );
+		//$tablefields = $wpdb->get_results( "DESCRIBE {$table};" );
+		$tablefields = $wpdb->get_results( "PRAGMA table_info({$table});");
+
+		continue;
+		
 		$wpdb->suppress_errors( $suppress );
 
 		if ( ! $tablefields ) {

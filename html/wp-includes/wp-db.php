@@ -36,6 +36,76 @@ define( 'ARRAY_A', 'ARRAY_A' );
  */
 define( 'ARRAY_N', 'ARRAY_N' );
 
+
+function mysql_connect() {
+	$pdo = new PDO(
+		'sqlite:/var/www/html/db3.bin',
+		//'sqlite::memory:',
+		null,
+		null,
+		array(PDO::ATTR_PERSISTENT => true)
+	);
+
+	return $pdo;
+}
+
+function mysql_get_server_info($pdo) {
+	return "5.7";
+}
+
+function mysql_get_client_info() {
+	return "5.7.0";
+}
+
+function mysql_real_escape_string($string, $pdo) {
+	// TODO: call escape function
+	return $string;
+}
+
+function mysql_query($query, $pdo) {
+	// if (strpos($query, "wp_users") !== false ) {
+	// 	print($query);
+	// }
+	return $pdo->query($query, PDO::FETCH_OBJ);
+	/*
+	if (strpos($query, "SELECT ") !== false) {
+		return $pdo->query($query, PDO::FETCH_OBJ);
+		// return $pdo->exec($sql);
+	} else {
+		print($query);
+		// return $pdo->query($query, PDO::FETCH_OBJ);
+		return $pdo->exec($sql);
+	}
+	*/
+}
+
+function mysql_select_db($db, $pdo) {
+	return true;
+}
+
+function mysql_ping() {
+	return true;
+}
+
+function mysql_error($pdo) {
+	$error = $pdo->errorInfo();
+
+	if ($error[2] == NULL) {
+		return false;
+	}
+
+	return $error[2];
+}
+
+function mysql_insert_id($pdo) {
+	return $pdo->lastInsertId();
+}
+
+function mysql_affected_rows($pdo) {
+	// return $pdo->rowCount();
+	return 1;
+}
+
 /**
  * WordPress database access abstraction class.
  *
@@ -808,7 +878,7 @@ class wpdb {
 					if ( ! empty( $collate ) ) {
 						$query .= $this->prepare( ' COLLATE %s', $collate );
 					}
-					mysql_query( $query, $dbh );
+					// mysql_query( $query, $dbh );
 				}
 			}
 		}
@@ -1981,11 +2051,11 @@ class wpdb {
 				$this->last_error = __( 'Unable to retrieve the error message from MySQL' );
 			}
 		} else {
-			if ( is_resource( $this->dbh ) ) {
-				$this->last_error = mysql_error( $this->dbh );
-			} else {
-				$this->last_error = __( 'Unable to retrieve the error message from MySQL' );
-			}
+			// if ( is_resource( $this->dbh ) ) {
+					$this->last_error = mysql_error( $this->dbh );
+			// } else {
+			// 	$this->last_error = __( 'Unable to retrieve the error message from MySQL' );
+			// }
 		}
 
 		if ( $this->last_error ) {
@@ -2014,20 +2084,34 @@ class wpdb {
 					$this->insert_id = mysql_insert_id( $this->dbh );
 				}
 			}
+			// var_dump($query . "<br>");
 			// Return number of rows affected.
 			$return_val = $this->rows_affected;
 		} else {
 			$num_rows = 0;
+			// print("query():" . $query . "<br>");
+
 			if ( $this->use_mysqli && $this->result instanceof mysqli_result ) {
 				while ( $row = mysqli_fetch_object( $this->result ) ) {
 					$this->last_result[ $num_rows ] = $row;
 					$num_rows++;
 				}
 			} elseif ( is_resource( $this->result ) ) {
+				
 				while ( $row = mysql_fetch_object( $this->result ) ) {
 					$this->last_result[ $num_rows ] = $row;
 					$num_rows++;
 				}
+			} else {
+				if ($this->result) {
+					// print("fetch: {$query}<br>");
+					// $rows = $this->result->fechAll();
+
+					foreach ($this->result as $row) {
+						$this->last_result[ $num_rows ] = $row;
+						$num_rows++;
+					}
+				}	
 			}
 
 			// Log and return the number of rows selected.
@@ -2768,6 +2852,9 @@ class wpdb {
 
 		$charsets = array();
 		$columns  = array();
+
+		$charsets['utf8'] = true;
+		return $charsets;
 
 		$table_parts = explode( '.', $table );
 		$table       = '`' . implode( '`.`', $table_parts ) . '`';
@@ -3584,12 +3671,12 @@ class wpdb {
 	public function get_charset_collate() {
 		$charset_collate = '';
 
-		if ( ! empty( $this->charset ) ) {
-			$charset_collate = "DEFAULT CHARACTER SET $this->charset";
-		}
-		if ( ! empty( $this->collate ) ) {
-			$charset_collate .= " COLLATE $this->collate";
-		}
+		// if ( ! empty( $this->charset ) ) {
+		// 	$charset_collate = "DEFAULT CHARACTER SET $this->charset";
+		// }
+		// if ( ! empty( $this->collate ) ) {
+		// 	$charset_collate .= " COLLATE $this->collate";
+		// }
 
 		return $charset_collate;
 	}
