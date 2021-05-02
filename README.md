@@ -18,7 +18,9 @@ Write following functions using PDO,
 - mysql_insert_id
 - mysql_affected_rows
 
+(Writing these functions to ```wp-includes/wp-db.php```)
+
 # TODO
 
-- Fix Admin login problem. (Occuring some problems at current_user_can function in ```capabilities.php```)
+- Fix Admin login problem. (Occuring some problems at ```current_user_can function``` in ```capabilities.php```)
 - Find a method instead of using ```SELECT FOUND_ROWS()```
